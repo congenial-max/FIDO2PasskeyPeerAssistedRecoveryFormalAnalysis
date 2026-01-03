@@ -1,0 +1,197 @@
+theory ECS_FIDO2PasskeyRecovery_Protocol
+begin
+
+builtins: asymmetric-encryption, xor
+heuristic: o "FIDO2_Passkey_Recovery.oracle"
+
+// ==========================================
+// --- RESTRICTIONS & INFRASTRUCTURE ---
+// ==========================================
+
+restriction OneSetupPerUser:
+"All A pk1 pk2 #i #j. MainKeyGenerated(A, pk1) @ i & MainKeyGenerated(A, pk2) @ j ==> #i = #j"
+
+restriction Equality:
+  "All x y #i. Eq(x,y) @i ==> x = y"
+
+// --- Secure Channels ---
+
+rule C2S_Send:  [ C2S_Snd(A, B,  m) ] --> [ Sec_C2S(A, B,  m) ]
+rule C2S_Receive:  [ Sec_C2S(A, B,  m) ] --> [ C2S_Rcv(A, B,  m) ]
+
+rule S2C_Send:  [ S2C_Snd(A, B,  m) ] --> [ Sec_S2C(A, B,  m) ]
+rule S2C_Receive:  [ Sec_S2C(A, B,  m) ] --> [ S2C_Rcv(A, B,  m) ]
+
+rule P2P_Send:  [ P2P_Snd(A, B,  m) ] --> [ Sec_P2P(A, B,  m) ]
+rule P2P_Receive:  [ Sec_P2P(A, B,  m) ] --> [ P2P_Rcv(A, B,  m) ]
+
+functions: qr_code/1
+
+// ==========================================
+// --- KEY GENERATION & REVEAL RULES ---
+// ==========================================
+
+rule Reveal_Ltk [color=#FFCCCC]:  [ !Ltk($A, ltk) ] --[ LtkReveal($A) ]-> [ Out(ltk) ]
+
+rule System_Setup [color=#F2F2F2]:
+  let
+    sk2A = (~ltkA XOR ~sk1A)
+    pkA = pk(~ltkA)
+    pkB = pk(~ltkB)
+  in
+  [ Fr(~ltkA), Fr(~sk1A), Fr(~ltkB) ]
+  --[ MainKeyGenerated('A', pkA), 
+      MainKeyGenerated($B, pkB),
+      UserRegistered('A','Client'),
+      UserRegistered($B,'Client')
+  ]->
+  [ !RegisteredUser('A', 'Client'), !Ltk('A', ~ltkA), !Pk('A', pkA), !SubkeyComponents('A', pkA, ~sk1A, sk2A), Out(pkA),
+    !RegisteredUser($B, 'Client'), !Ltk($B, ~ltkB), !Pk($B, pkB), Out(pkB),
+    CanInitiate('A', 'B') 
+  ]
+
+// ==========================================
+// --- INITIATOR (EMPLOYEE A) RULES ---
+// ==========================================
+
+rule Initiator_Sends_Peer_Name [color=#E6F2FF]:
+  [ CanInitiate($A, $B),  !Ltk($A, ltkA), !RegisteredUser($A, 'Client'), !RegisteredUser($B, 'Client') ]
+  --[ Initiated($A, $B ) ]->
+  [ C2S_Snd($A, 'Server',  <$A, $B>), State_A_1( $A, $B, ltkA) ]
+
+rule Initiator_Receives_Peer_Key [color=#E6F2FF]:
+  [ State_A_1( $A, $B, ltkA), S2C_Rcv('Server', $A,  <'server_response', pkB>) ]
+  --[ AReceivedPeerKey($A, $B, pkB) ]->
+  [ State_A_2( $A, $B, ltkA, pkB) ]
+
+rule Initiator_Sends_Subkeys [color=#E6F2FF]:
+  let encrypted_sk1 = aenc(sk1, pkB)
+      package = <pkA, sk2, encrypted_sk1, $B>
+  in
+  [ State_A_2( $A, $B, ltkA, pkB), !Pk($A, pkA), !SubkeyComponents($A, pkA, sk1, sk2) ]  
+  --[ ASendsKeyPackage($A, $B, package, encrypted_sk1)]->
+  [ C2S_Snd($A, 'Server',  package), State_A_3( $A, $B, ltkA, pkB, sk2, encrypted_sk1) ]
+
+rule Initiator_Starts_Phase2 [color=#E6F2FF]:
+  [ State_A_3( $A, $B, ltkA, pkB, sk2, encrypted_sk1), Fr(~fido_key), !Pk($A, pkA) ]
+  --[ A_Generates_FIDO_Key($A, ~fido_key) ]->
+  [ C2S_Snd($A, 'Server',  aenc(~fido_key, pkA)), State_A_4( $A, $B, ~fido_key) ]
+
+rule Initiate_Recovery [color=#E6F2FF]:
+  [ State_A_4( $A, $B, fido_key), Fr(~nonce) ] 
+  --[ A_Initiates_Recovery($A, ~nonce) ]->
+  [ C2S_Snd($A, 'Server',  <'recovery_request', $B, ~nonce>), State_A_Recovery_1( $A, $B, ~nonce) ]
+
+rule Initiator_Receives_Recovery_Data [color=#E6F2FF]:
+  [ State_A_Recovery_1( $A, $B, ~nonce), 
+    In(<'Server', $A,  <'recovery_fido', encrypted_fido_key>>), 
+    In(<'Server', $A,  <'recovery_package', sk2>>) ]
+  --[ AReceivedRecoveryData($A,  sk2, encrypted_fido_key) ]->
+  [ State_A_Recovery_2( $A, $B, sk2, encrypted_fido_key) ]
+
+rule Initiator_Requests_Help_From_Peer [color=#E6F2FF]:
+  [ State_A_Recovery_2( $A, $B, sk2, encrypted_fido_key) ]
+  --[ ARequestsHelp($A, $B) ]->
+  [ P2P_Snd($A, $B,  'recovery_help_request'), State_A_Recovery_3( $A, $B, sk2, encrypted_fido_key) ]
+
+rule Initiator_Receives_Decrypted_Subkey [color=#E6F2FF]:
+  [ State_A_Recovery_3( $A, $B, sk2, encrypted_fido_key), 
+    P2P_Rcv($B, $A,  qr_code(sk1)) ]
+  --[ AReceivedQR($A, $B,  qr_code(sk1)),
+      A_Receives_Decrypted_Subkey($A, $B,  sk1) ]->  
+  [ State_A_Recovery_4( $A, $B, sk1, sk2, encrypted_fido_key) ]
+
+rule Initiator_Reconstructs_PrivateKey [color=#E6F2FF]:
+  let reconstructed_ltk = sk1 XOR sk2 in
+  [ State_A_Recovery_4( $A, $B, sk1, sk2, encrypted_fido_key), !Pk($A, pkA) ]
+  --[ 
+      Eq(pk(reconstructed_ltk), pkA), 
+      A_Reconstructs_Key($A, reconstructed_ltk) 
+  ]->
+  [ State_A_Recovered( $A, $B, encrypted_fido_key, reconstructed_ltk) ]
+
+rule Initiator_Recovers_FIDO_Key [color=#E6F2FF]:
+  let fido_key = adec(encrypted_fido_key, reconstructed_ltk) in
+  [ State_A_Recovered( $A, $B, encrypted_fido_key, reconstructed_ltk) ]
+  --[ A_Recovers_FIDO_Key($A, fido_key), RecoveryComplete( $A, $B) ]-> 
+  []
+
+// ==========================================
+// --- SERVER RULES ---
+// ==========================================
+
+rule Server_Sends_Peer_Key [color=#FFE6CC]:
+  [ C2S_Rcv($A, 'Server',  <$A, $B>), !Pk($B, pkB), !RegisteredUser($A, 'Client') ]
+  --[ ServerResponds($A, $B, pkB) ]->
+  [ S2C_Snd('Server', $A,  <'server_response', pkB>) ]
+
+rule Server_Receives_And_Forwards_Package [color=#FFE6CC]:
+  [ C2S_Rcv($A, 'Server',  <pkA, sk2, encrypted_sk1, $B>) ]  
+  --[ ServerStoresPackage($A, $B, pkA, sk2, encrypted_sk1),
+      ServerForwardsSubkey($A, $B, encrypted_sk1) ]->
+  [ !StoredPackage($A, $B,  pkA, sk2, encrypted_sk1),
+    S2C_Snd('Server', $B,  <'subkey_package', $A, encrypted_sk1>) ]
+
+rule Server_Receives_FIDO_Key [color=#FFE6CC]:
+  [ C2S_Rcv($A, 'Server',  encrypted_fido_key) ]
+  --[ ServerStoresFIDOKey($A, encrypted_fido_key) ]->
+  [ !StoredFIDOKey($A,  encrypted_fido_key)]
+
+rule Server_Sends_Recovery_Data [color=#FFE6CC]:
+  [ C2S_Rcv($A, 'Server',  <'recovery_request', $B, nonce>), 
+    !StoredFIDOKey($A,  encrypted_fido_key), 
+    !StoredPackage($A, $B,  pkA, sk2, encrypted_sk1) ]
+  --[ ServerSendsRecoveryData($A,  sk2, encrypted_fido_key) ]->
+  [ Out(<'Server', $A,  <'recovery_fido', nonce, encrypted_fido_key>>), 
+    Out(<'Server', $A,  <'recovery_package', nonce, sk2>>),
+    Out(<'Server', $A,  <'subkey_package', encrypted_sk1>>) ]
+
+// ==========================================
+// --- PEER RULES ---
+// ==========================================
+
+rule Peer_Receives_Encrypted_Subkey [color=#E6FFE6]:
+  [ S2C_Rcv('Server', $B,  <'subkey_package', $A, aenc(sk1, pkB)>), !Pk($B, pkB) ]
+  --[ B_Stores_Subkey($B, $A,  aenc(sk1, pkB)) ]->
+  [ !StoredEncryptedSubkey($B, $A,  aenc(sk1, pkB)) ]
+
+rule Peer_Decrypts_And_Sends_QR [color=#E6FFE6]:
+  [ P2P_Rcv($A, $B,  'recovery_help_request'), 
+    !StoredEncryptedSubkey($B, $A,  aenc(sk1, pk(ltkB))), 
+    !Ltk($B, ltkB) ]
+  --[ PeerHelpsRecovery($B, $A,  sk1) ]->
+  [ P2P_Snd($B, $A,  qr_code(sk1)) ]
+
+// ==========================================
+// --- LEMMAS ---
+// ==========================================
+
+lemma protocol_is_executable_strong: exists-trace
+  "Ex  A B #i.
+    RecoveryComplete(A, B) @ i
+    & not (Ex User #k. LtkReveal(User) @ #k)
+    & (All A1 B1 #j1 A2 B2 #j2. 
+  Initiated(A1, B1) @ j1 & Initiated(A2, B2) @ j2 ==> #j1 = #j2)"
+
+lemma secrecy_peer_share_sk1:
+  "All A B sk1 #i.
+    PeerHelpsRecovery(B, A, sk1) @ i
+    & not(Ex #k. LtkReveal(A) @ k)
+    & (All Peer #k. Initiated(A, Peer) @ k ==> not(Ex #r. LtkReveal(Peer) @ r))
+  ==> not(Ex #z. K(sk1) @ z)"
+
+lemma secrecy_main_key:
+  "All A ltk #i. 
+    A_Reconstructs_Key(A, ltk) @ i
+    & not(Ex #k. LtkReveal(A) @ k)
+    & (All B #k. Initiated(A, B) @ k ==> not(Ex #r. LtkReveal(B) @ r))
+  ==> not(Ex #z. K(ltk) @ z)"
+
+lemma secrecy_fido_key:
+    "All A fido_key #i.
+      A_Recovers_FIDO_Key(A, fido_key) @ i
+      & not(Ex #l. LtkReveal(A)@l)
+      & (All B #k. Initiated(A, B) @ k ==> not(Ex #r. LtkReveal(B) @ r))
+    ==> not(Ex #z. K(fido_key) @ z)"
+
+end

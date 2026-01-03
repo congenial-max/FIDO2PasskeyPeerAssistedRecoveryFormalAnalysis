@@ -1,0 +1,7 @@
+/usr/bin/time -v tamarin-prover --with-dot=./tamarin-cleandot.py 1_ICS_FIDO2PasskeyRecovery_Protocol.spthy --prove --derivcheck-timeout=0 --saturation=50  --open-chains=1000  --output=1_ICS_FIDO2PasskeyRecovery_Protocol_dependencyGraph.spthy --quit-on-warning 2>&1 | tee 1_ICS_FIDO2PasskeyRecovery_Protocol_log.log
+
+
+/usr/bin/time -v tamarin-prover --with-dot=./tamarin-cleandot.py 1_ECS_FIDO2PasskeyRecovery_Protocol.spthy --prove --derivcheck-timeout=0 --saturation=50  --open-chains=1000  --output=1_ECS_FIDO2PasskeyRecovery_Protocol_dependencyGraph.spthy --quit-on-warning 2>&1 | tee 1_ECS_FIDO2PasskeyRecovery_Protocol_log.log
+
+
+/usr/bin/time -v tamarin-prover --with-dot=./tamarin-cleandot.py 2_ECS_FIDO2PasskeyRecovery_HardenedProtocol.spthy --prove --derivcheck-timeout=0 --saturation=50  --open-chains=1000  --output=2_ECS_FIDO2PasskeyRecovery_HardenedProtocol_dependencyGraph.spthy --quit-on-warning 2>&1 | tee 2_ECS_FIDO2PasskeyRecovery_HardenedProtocol_log.log

@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+import re, sys
+
+# FIDO2 Optimized Oracle - Updated for new System_Setup
+# Strategy: Prioritize honest setup/state. Penalize adversary derivation of combine_keys.
+
+lines = sys.stdin.readlines()
+goals = []
+
+for line in lines:
+    # Regex to capture the index and the goal text
+    match = re.match(r"^(\d+):(?:\s*)(.*)$", line)
+    
+    if match:
+        index = int(match.group(1))
+        text = match.group(2).strip()
+        
+        # --- HEURISTIC SCORING ---
+        # Lower score = Higher Priority
+        
+        score = 50  # Default middle score
+
+        # 1. TOP PRIORITY: Honest Setup and State
+        if "State_" in text:
+            # FIX: Deprioritize Recovery states to avoid infinite recursion loops
+            if "Recovery" in text or "Recovered" in text:
+                score = 22  # Lower priority than network/storage (Score ~20)
+            else:
+                score = 5   # High priority for normal flow
+
+        elif "!Ltk" in text or "!Pk" in text or "!RegisteredUser" in text:
+            # If the goal explicitly mentions XOR logic, delay it massively
+            if "XOR" in text or "(+)" in text or "⊕" in text:  # <--- NEW
+                score = 80
+            else:
+                score = 6
+        
+        elif "!SubkeyComponents" in text:
+            score = 6
+        elif "CanInitiate" in text:
+            score = 7
+
+        # 2. HIGH PRIORITY: Storage/Memory
+        # Resolving !StoredPackage points directly to 'Server_Receives_Package'.
+        elif "!Stored" in text:
+            score = 10
+
+        # 3. MEDIUM PRIORITY: Communication Links
+        # Resolve the Receive event to find the Sender.
+        elif "RcvS" in text or "Sec(" in text:
+            score = 15
+        elif "SndS" in text:
+            score = 20
+        elif "In(" in text or "Out(" in text:
+            score = 25
+
+        # 4. LOW PRIORITY: Term Resolution
+        # Let state resolution instantiate variables first.
+        elif "splitEqs" in text:
+            score = 80
+
+          
+        # 5. LOWEST PRIORITY: Adversary Knowledge (!KU)
+        # We assume the adversary generates data LAST.
+        elif "!KU" in text or "KU(" in text:
+            score = 90
+            
+            # CRITICAL OPTIMIZATION:
+            # Penalize the Adversary trying to perform XOR operations (replacing combine_keys)
+            # Honest participants (Priority 1) can use combine_keys freely.
+            # The Adversary (Priority 5) is punished for it.
+            if "XOR" in text or "(+)"  or "⊕" in text:  # <--- NEW: Catch both "XOR" and "(+)" representations
+                score = 110  # Maximum Penalty
+            elif "qr_code" in text:
+                score = 105
+            elif "aenc" in text:
+                score = 100
+        
+        # 6. LEMMA NAMING (Startup Goals)
+        elif "%" in line or "goal" in line:
+            if "protocol_is_executable" in text: score = 0
+            elif "received_implies_initiated" in text: score = 1
+            elif "secrecy" in text: score = 5
+            
+        goals.append((score, index))
+
+# Sort by score (ascending), then by index (ascending)
+goals.sort()
+
+# Print indices
+for _, idx in goals:
+    print(idx)

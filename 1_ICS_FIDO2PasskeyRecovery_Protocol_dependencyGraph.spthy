@@ -1,0 +1,538 @@
+theory ECS_FIDO2PasskeyRecovery_Protocol begin
+
+// Function signature and definition of the equational theory E
+
+builtins: xor
+functions: adec/2, aenc/2, fst/1, pair/2, pk/1, qr_code/1, snd/1
+equations:
+    adec(aenc(x.1, pk(x.2)), x.2) = x.1,
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2
+
+
+
+heuristic: o "FIDO2_Passkey_Recovery.oracle"
+
+
+
+
+
+restriction OneSetupPerUser:
+  "∀ A pk1 pk2 #i #j.
+    ((MainKeyGenerated( A, pk1 ) @ #i) ∧ (MainKeyGenerated( A, pk2 ) @ #j)) ⇒
+    (#i = #j)"
+  // safety formula
+
+restriction Equality:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+rule (modulo E) C2S_Send:
+   [ C2S_Snd( A, B, m ) ] --> [ Sec_C2S( A, B, m ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) C2S_Receive:
+   [ Sec_C2S( A, B, m ) ] --> [ C2S_Rcv( A, B, m ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) P2P_Send:
+   [ P2P_Snd( A, B, m ) ] --> [ Sec_P2P( A, B, m ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) P2P_Receive:
+   [ Sec_P2P( A, B, m ) ] --> [ P2P_Rcv( A, B, m ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Reveal_Ltk[color=#ffcccc]:
+   [ !Ltk( $A, ltk ) ] --[ LtkReveal( $A ) ]-> [ Out( ltk ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) System_Setup[color=#f2f2f2]:
+   [ Fr( ~ltkA ), Fr( ~sk1A ), Fr( ~ltkB ) ]
+  --[
+  MainKeyGenerated( 'A', pk(~ltkA) ), MainKeyGenerated( $B, pk(~ltkB) ),
+  UserRegistered( 'A', 'Client' ), UserRegistered( $B, 'Client' )
+  ]->
+   [
+   !RegisteredUser( 'A', 'Client' ), !Ltk( 'A', ~ltkA ),
+   !Pk( 'A', pk(~ltkA) ),
+   !SubkeyComponents( 'A', pk(~ltkA), ~sk1A, (~ltkA⊕~sk1A) ),
+   Out( pk(~ltkA) ), !RegisteredUser( $B, 'Client' ), !Ltk( $B, ~ltkB ),
+   !Pk( $B, pk(~ltkB) ), Out( pk(~ltkB) ), CanInitiate( 'A', 'B' )
+   ]
+
+  /*
+  rule (modulo AC) System_Setup[color=#f2f2f2]:
+     [ Fr( ~ltkA ), Fr( ~sk1A ), Fr( ~ltkB ) ]
+    --[
+    MainKeyGenerated( 'A', pk(~ltkA) ), MainKeyGenerated( $B, pk(~ltkB) ),
+    UserRegistered( 'A', 'Client' ), UserRegistered( $B, 'Client' )
+    ]->
+     [
+     !RegisteredUser( 'A', 'Client' ), !Ltk( 'A', ~ltkA ),
+     !Pk( 'A', pk(~ltkA) ), !SubkeyComponents( 'A', pk(~ltkA), ~sk1A, z ),
+     Out( pk(~ltkA) ), !RegisteredUser( $B, 'Client' ), !Ltk( $B, ~ltkB ),
+     !Pk( $B, pk(~ltkB) ), Out( pk(~ltkB) ), CanInitiate( 'A', 'B' )
+     ]
+    variants (modulo AC)
+    1. ~ltkA = ~ltkA.9
+       ~sk1A = ~ltkA.9
+       z     = zero
+    
+    2. ~ltkA = ~ltkA.11
+       ~sk1A = ~sk1A.13
+       z     = (~ltkA.11⊕~sk1A.13)
+  */
+
+rule (modulo E) Initiator_Sends_Peer_Name[color=#e6f2ff]:
+   [
+   CanInitiate( $A, $B ), !Ltk( $A, ltkA ), !RegisteredUser( $A, 'Client' ),
+   !RegisteredUser( $B, 'Client' )
+   ]
+  --[ Initiated( $A, $B ) ]->
+   [ C2S_Snd( $A, 'Server', <$A, $B> ), State_A_1( $A, $B, ltkA ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator_Receives_Peer_Key[color=#e6f2ff]:
+   [ State_A_1( $A, $B, ltkA ), In( <'Server', $A, 'server_response', pkB> )
+   ]
+  --[ AReceivedPeerKey( $A, $B, pkB ) ]->
+   [ State_A_2( $A, $B, ltkA, pkB ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator_Sends_Subkeys[color=#e6f2ff]:
+   [
+   State_A_2( $A, $B, ltkA, pkB ), !Pk( $A, pkA ),
+   !SubkeyComponents( $A, pkA, sk1, sk2 )
+   ]
+  --[
+  ASendsKeyPackage( $A, $B, <pkA, sk2, aenc(sk1, pkB), $B>, aenc(sk1, pkB)
+  )
+  ]->
+   [
+   C2S_Snd( $A, 'Server', <pkA, sk2, aenc(sk1, pkB), $B> ),
+   State_A_3( $A, $B, ltkA, pkB, sk2, aenc(sk1, pkB) )
+   ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator_Starts_Phase2[color=#e6f2ff]:
+   [
+   State_A_3( $A, $B, ltkA, pkB, sk2, encrypted_sk1 ), Fr( ~fido_key ),
+   !Pk( $A, pkA )
+   ]
+  --[ A_Generates_FIDO_Key( $A, ~fido_key ) ]->
+   [
+   C2S_Snd( $A, 'Server', aenc(~fido_key, pkA) ),
+   State_A_4( $A, $B, ~fido_key )
+   ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiate_Recovery[color=#e6f2ff]:
+   [ State_A_4( $A, $B, fido_key ), Fr( ~nonce ) ]
+  --[ A_Initiates_Recovery( $A, ~nonce ) ]->
+   [
+   C2S_Snd( $A, 'Server', <'recovery_request', $B, ~nonce> ),
+   State_A_Recovery_1( $A, $B, ~nonce )
+   ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator_Receives_Recovery_Data[color=#e6f2ff]:
+   [
+   State_A_Recovery_1( $A, $B, ~nonce ),
+   In( <'Server', $A, 'recovery_fido', encrypted_fido_key> ),
+   In( <'Server', $A, 'recovery_package', sk2> )
+   ]
+  --[ AReceivedRecoveryData( $A, sk2, encrypted_fido_key ) ]->
+   [ State_A_Recovery_2( $A, $B, sk2, encrypted_fido_key ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator_Requests_Help_From_Peer[color=#e6f2ff]:
+   [ State_A_Recovery_2( $A, $B, sk2, encrypted_fido_key ) ]
+  --[ ARequestsHelp( $A, $B ) ]->
+   [
+   P2P_Snd( $A, $B, 'recovery_help_request' ),
+   State_A_Recovery_3( $A, $B, sk2, encrypted_fido_key )
+   ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator_Receives_Decrypted_Subkey[color=#e6f2ff]:
+   [
+   State_A_Recovery_3( $A, $B, sk2, encrypted_fido_key ),
+   P2P_Rcv( $B, $A, qr_code(sk1) )
+   ]
+  --[
+  AReceivedQR( $A, $B, qr_code(sk1) ),
+  A_Receives_Decrypted_Subkey( $A, $B, sk1 )
+  ]->
+   [ State_A_Recovery_4( $A, $B, sk1, sk2, encrypted_fido_key ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Initiator_Reconstructs_PrivateKey[color=#e6f2ff]:
+   [
+   State_A_Recovery_4( $A, $B, sk1, sk2, encrypted_fido_key ),
+   !Pk( $A, pkA )
+   ]
+  --[ Eq( pk((sk1⊕sk2)), pkA ), A_Reconstructs_Key( $A, (sk1⊕sk2) ) ]->
+   [ State_A_Recovered( $A, $B, encrypted_fido_key, (sk1⊕sk2) ) ]
+
+  /*
+  rule (modulo AC) Initiator_Reconstructs_PrivateKey[color=#e6f2ff]:
+     [
+     State_A_Recovery_4( $A, $B, sk1, sk2, encrypted_fido_key ),
+     !Pk( $A, pkA )
+     ]
+    --[ Eq( pk(z), pkA ), A_Reconstructs_Key( $A, z ) ]->
+     [ State_A_Recovered( $A, $B, encrypted_fido_key, z ) ]
+    variants (modulo AC)
+    1. sk1   = sk1.8
+       sk2   = sk2.8
+       z     = (sk1.8⊕sk2.8)
+    
+    2. sk1   = sk1.8
+       sk2   = zero
+       z     = sk1.8
+    
+    3. sk1   = x.8
+       sk2   = x.8
+       z     = zero
+    
+    4. sk1   = x.8
+       sk2   = (x.8⊕x.9)
+       z     = x.9
+    
+    5. sk1   = zero
+       sk2   = sk2.8
+       z     = sk2.8
+    
+    6. sk1   = (x.8⊕x.9)
+       sk2   = x.8
+       z     = x.9
+    
+    7. sk1   = (x.8⊕x.9)
+       sk2   = (x.8⊕x.10)
+       z     = (x.9⊕x.10)
+  */
+
+rule (modulo E) Initiator_Recovers_FIDO_Key[color=#e6f2ff]:
+   [ State_A_Recovered( $A, $B, encrypted_fido_key, reconstructed_ltk ) ]
+  --[
+  A_Recovers_FIDO_Key( $A, adec(encrypted_fido_key, reconstructed_ltk) ),
+  RecoveryComplete( $A, $B )
+  ]->
+   [ ]
+
+  /*
+  rule (modulo AC) Initiator_Recovers_FIDO_Key[color=#e6f2ff]:
+     [ State_A_Recovered( $A, $B, encrypted_fido_key, reconstructed_ltk ) ]
+    --[ A_Recovers_FIDO_Key( $A, z ), RecoveryComplete( $A, $B ) ]->
+     [ ]
+    variants (modulo AC)
+    1. encrypted_fido_key
+             = encrypted_fido_key.6
+       reconstructed_ltk
+             = reconstructed_ltk.6
+       z     = adec(encrypted_fido_key.6, reconstructed_ltk.6)
+    
+    2. encrypted_fido_key
+             = aenc(x.6, pk(x.7))
+       reconstructed_ltk
+             = x.7
+       z     = x.6
+  */
+
+rule (modulo E) Server_Sends_Peer_Key[color=#ffe6cc]:
+   [
+   C2S_Rcv( $A, 'Server', <$A, $B> ), !Pk( $B, pkB ),
+   !RegisteredUser( $A, 'Client' )
+   ]
+  --[ ServerResponds( $A, $B, pkB ) ]->
+   [ Out( <'Server', $A, 'server_response', pkB> ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Server_Receives_And_Forwards_Package[color=#ffe6cc]:
+   [ C2S_Rcv( $A, 'Server', <pkA, sk2, encrypted_sk1, $B> ) ]
+  --[
+  ServerStoresPackage( $A, $B, pkA, sk2, encrypted_sk1 ),
+  ServerForwardsSubkey( $A, $B, encrypted_sk1 )
+  ]->
+   [
+   !StoredPackage( $A, $B, pkA, sk2, encrypted_sk1 ),
+   Out( <'Server', $B, 'subkey_package', $A, encrypted_sk1> )
+   ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Server_Receives_FIDO_Key[color=#ffe6cc]:
+   [ C2S_Rcv( $A, 'Server', encrypted_fido_key ) ]
+  --[ ServerStoresFIDOKey( $A, encrypted_fido_key ) ]->
+   [ !StoredFIDOKey( $A, encrypted_fido_key ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Server_Sends_Recovery_Data[color=#ffe6cc]:
+   [
+   C2S_Rcv( $A, 'Server', <'recovery_request', $B, nonce> ),
+   !StoredFIDOKey( $A, encrypted_fido_key ),
+   !StoredPackage( $A, $B, pkA, sk2, encrypted_sk1 )
+   ]
+  --[ ServerSendsRecoveryData( $A, sk2, encrypted_fido_key ) ]->
+   [
+   Out( <'Server', $A, 'recovery_fido', nonce, encrypted_fido_key> ),
+   Out( <'Server', $A, 'recovery_package', nonce, sk2> ),
+   Out( <'Server', $A, 'subkey_package', encrypted_sk1> )
+   ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Peer_Receives_Encrypted_Subkey[color=#e6ffe6]:
+   [
+   In( <'Server', $B, 'subkey_package', $A, aenc(sk1, pkB)> ),
+   !Pk( $B, pkB )
+   ]
+  --[ B_Stores_Subkey( $B, $A, aenc(sk1, pkB) ) ]->
+   [ !StoredEncryptedSubkey( $B, $A, aenc(sk1, pkB) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Peer_Decrypts_And_Sends_QR[color=#e6ffe6]:
+   [
+   P2P_Rcv( $A, $B, 'recovery_help_request' ),
+   !StoredEncryptedSubkey( $B, $A, aenc(sk1, pk(ltkB)) ), !Ltk( $B, ltkB )
+   ]
+  --[ PeerHelpsRecovery( $B, $A, sk1 ) ]->
+   [ P2P_Snd( $B, $A, qr_code(sk1) ) ]
+
+  // loop breaker: [0]
+  /* has exactly the trivial AC variant */
+
+lemma protocol_is_executable_strong:
+  exists-trace
+  "∃ A B #i.
+    ((RecoveryComplete( A, B ) @ #i) ∧
+     (¬(∃ User #k. LtkReveal( User ) @ #k))) ∧
+    (∀ A1 B1 #j1 A2 B2 #j2.
+      ((Initiated( A1, B1 ) @ #j1) ∧ (Initiated( A2, B2 ) @ #j2)) ⇒
+      (#j1 = #j2))"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ A B #i.
+  (RecoveryComplete( A, B ) @ #i)
+ ∧
+  (∀ User #k. (LtkReveal( User ) @ #k) ⇒ ⊥) ∧
+  (∀ A1 B1 #j1 A2 B2 #j2.
+    (Initiated( A1, B1 ) @ #j1) ∧ (Initiated( A2, B2 ) @ #j2) ⇒ #j1 = #j2)"
+*/
+simplify
+solve( State_A_Recovered( $A, $B, encrypted_fido_key, reconstructed_ltk
+       ) ▶₀ #i )
+  case Initiator_Reconstructs_PrivateKey
+  solve( P2P_Rcv( 'A', 'B', 'recovery_help_request' ) ▶₀ #vr.8 )
+    case P2P_Receive
+    solve( splitEqs(0) )
+      case split_case_1
+      solve( splitEqs(1) )
+        case split
+        solve( splitEqs(11) )
+          case split_case_1
+          solve( !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.20 )
+            case c_aenc
+            solve( !KU( ~ltkA ) @ #vk.24 )
+              case Server_Sends_Recovery_Data_case_1
+              solve( !KU( pk(~ltkB) ) @ #vk.25 )
+                case System_Setup
+                solve( !KU( ~sk1A ) @ #vk.26 )
+                  case Server_Receives_And_Forwards_Package
+                  solve( !KU( pk(x) ) @ #vk.26 )
+                    case c_pk
+                    SOLVED // trace found
+                  qed
+                qed
+              qed
+            qed
+          qed
+        qed
+      qed
+    qed
+  qed
+qed
+
+lemma secrecy_peer_share_sk1:
+  all-traces
+  "∀ A B sk1 #i.
+    (((PeerHelpsRecovery( B, A, sk1 ) @ #i) ∧
+      (¬(∃ #k. LtkReveal( A ) @ #k))) ∧
+     (∀ Peer #k.
+       (Initiated( A, Peer ) @ #k) ⇒ (¬(∃ #r. LtkReveal( Peer ) @ #r)))) ⇒
+    (¬(∃ #z. K( sk1 ) @ #z))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ A B sk1 #i.
+  (PeerHelpsRecovery( B, A, sk1 ) @ #i)
+ ∧
+  (∀ #k. (LtkReveal( A ) @ #k) ⇒ ⊥) ∧
+  (∀ Peer #k.
+    (Initiated( A, Peer ) @ #k) ⇒ ∀ #r. (LtkReveal( Peer ) @ #r) ⇒ ⊥) ∧
+  (∃ #z. (K( sk1 ) @ #z))"
+*/
+simplify
+solve( !Ltk( $B, ltkB ) ▶₂ #i )
+  case System_Setup_case_2
+  solve( !StoredEncryptedSubkey( $B, $A, aenc(sk1, pk(~ltkB)) ) ▶₁ #i )
+    case Peer_Receives_Encrypted_Subkey
+    solve( P2P_Rcv( $A, $B, 'recovery_help_request' ) ▶₀ #i )
+      case P2P_Receive
+      solve( splitEqs(1) )
+        case split
+        solve( !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.15 )
+          case c_aenc
+          solve( !KU( pk(~ltkB) ) @ #vk.25 )
+            case Server_Sends_Peer_Key
+            SOLVED // trace found
+          qed
+        qed
+      qed
+    qed
+  qed
+qed
+
+lemma secrecy_main_key:
+  all-traces
+  "∀ A ltk #i.
+    (((A_Reconstructs_Key( A, ltk ) @ #i) ∧ (¬(∃ #k. LtkReveal( A ) @ #k))) ∧
+     (∀ B #k. (Initiated( A, B ) @ #k) ⇒ (¬(∃ #r. LtkReveal( B ) @ #r)))) ⇒
+    (¬(∃ #z. K( ltk ) @ #z))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ A ltk #i.
+  (A_Reconstructs_Key( A, ltk ) @ #i)
+ ∧
+  (∀ #k. (LtkReveal( A ) @ #k) ⇒ ⊥) ∧
+  (∀ B #k. (Initiated( A, B ) @ #k) ⇒ ∀ #r. (LtkReveal( B ) @ #r) ⇒ ⊥) ∧
+  (∃ #z. (K( ltk ) @ #z))"
+*/
+simplify
+solve( !Pk( $A, pk(ltk) ) ▶₁ #i )
+  case System_Setup_case_1
+  solve( State_A_Recovery_4( 'A', $B, sk1, sk2, encrypted_fido_key
+         ) ▶₀ #i )
+    case Initiator_Receives_Decrypted_Subkey
+    solve( P2P_Rcv( 'A', 'B', 'recovery_help_request' ) ▶₀ #vr.7 )
+      case P2P_Receive
+      solve( splitEqs(0) )
+        case split_case_1
+        solve( splitEqs(1) )
+          case split
+          solve( !KU( ~ltkA ) @ #vk )
+            case Server_Sends_Recovery_Data_case_1
+            solve( !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.21 )
+              case c_aenc
+              solve( !KU( ~sk1A ) @ #vk.25 )
+                case Server_Receives_And_Forwards_Package
+                solve( !KU( pk(~ltkB) ) @ #vk.26 )
+                  case System_Setup
+                  solve( !KU( pk(x) ) @ #vk.26 )
+                    case c_pk
+                    SOLVED // trace found
+                  qed
+                qed
+              qed
+            qed
+          qed
+        qed
+      qed
+    qed
+  qed
+qed
+
+lemma secrecy_fido_key:
+  all-traces
+  "∀ A fido_key #i.
+    (((A_Recovers_FIDO_Key( A, fido_key ) @ #i) ∧
+      (¬(∃ #l. LtkReveal( A ) @ #l))) ∧
+     (∀ B #k. (Initiated( A, B ) @ #k) ⇒ (¬(∃ #r. LtkReveal( B ) @ #r)))) ⇒
+    (¬(∃ #z. K( fido_key ) @ #z))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ A fido_key #i.
+  (A_Recovers_FIDO_Key( A, fido_key ) @ #i)
+ ∧
+  (∀ #l. (LtkReveal( A ) @ #l) ⇒ ⊥) ∧
+  (∀ B #k. (Initiated( A, B ) @ #k) ⇒ ∀ #r. (LtkReveal( B ) @ #r) ⇒ ⊥) ∧
+  (∃ #z. (K( fido_key ) @ #z))"
+*/
+simplify
+solve( State_A_Recovered( $A, $B, encrypted_fido_key, reconstructed_ltk
+       ) ▶₀ #i )
+  case Initiator_Reconstructs_PrivateKey
+  solve( P2P_Rcv( 'A', 'B', 'recovery_help_request' ) ▶₀ #vr.8 )
+    case P2P_Receive
+    solve( splitEqs(0) )
+      case split_case_1
+      solve( splitEqs(1) )
+        case split
+        solve( splitEqs(11) )
+          case split_case_1
+          solve( !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.21 )
+            case c_aenc
+            solve( !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk.1 )
+              case c_adec
+              solve( !KU( ~ltkA ) @ #vk.25 )
+                case Server_Sends_Recovery_Data_case_1
+                solve( !KU( pk(~ltkB) ) @ #vk.26 )
+                  case System_Setup
+                  solve( !KU( ~sk1A ) @ #vk.27 )
+                    case Server_Receives_And_Forwards_Package
+                    solve( !KU( pk(x) ) @ #vk.27 )
+                      case c_pk
+                      SOLVED // trace found
+                    qed
+                  qed
+                qed
+              qed
+            qed
+          qed
+        qed
+      qed
+    qed
+  qed
+qed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* All wellformedness checks were successful. */
+
+/*
+Generated from:
+Tamarin version 1.10.0
+Maude version 2.7.1
+Git revision: UNKNOWN, branch: UNKNOWN
+Compiled at: 2024-10-30 14:56:23.355649243 UTC
+*/
+
+end
