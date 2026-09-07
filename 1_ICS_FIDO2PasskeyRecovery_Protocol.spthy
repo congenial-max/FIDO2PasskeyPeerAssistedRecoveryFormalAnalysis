@@ -1,4 +1,4 @@
-theory ECS_FIDO2PasskeyRecovery_Protocol
+theory ICS_FIDO2PasskeyRecovery_Protocol
 begin
 
 builtins: asymmetric-encryption, xor
