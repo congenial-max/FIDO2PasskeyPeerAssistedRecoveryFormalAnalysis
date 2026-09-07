@@ -1,4 +1,4 @@
-theory ECS_FIDO2PasskeyRecovery_Protocol begin
+theory ICS_FIDO2PasskeyRecovery_Protocol begin
 
 // Function signature and definition of the equational theory E
 
