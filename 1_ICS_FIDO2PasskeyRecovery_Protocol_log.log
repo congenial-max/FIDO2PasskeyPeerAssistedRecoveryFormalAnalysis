@@ -1,9 +1,9 @@
 maude tool: 'maude'
  checking version: 2.7.1. OK.
  checking installation: OK.
-[Theory ECS_FIDO2PasskeyRecovery_Protocol] Theory loaded
-[Theory ECS_FIDO2PasskeyRecovery_Protocol] Theory translated
-[Theory ECS_FIDO2PasskeyRecovery_Protocol] Theory closed
+[Theory ICS_FIDO2PasskeyRecovery_Protocol] Theory loaded
+[Theory ICS_FIDO2PasskeyRecovery_Protocol] Theory translated
+[Theory ICS_FIDO2PasskeyRecovery_Protocol] Theory closed
 >>>>>>>>>>>>>>>>>>>>>>>> START INPUT
 
 >>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
