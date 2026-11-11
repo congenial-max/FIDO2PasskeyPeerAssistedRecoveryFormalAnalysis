@@ -1,0 +1,2620 @@
+maude tool: '/home/ubuntu-kr-6-antigravity/bin/maude'
+ checking version: 3.4. OK.
+ checking installation: OK.
+[Theory ICS_FIDO2PasskeyRecovery_Protocol] Theory loaded
+[Theory ICS_FIDO2PasskeyRecovery_Protocol] Theory translated
+[Theory ICS_FIDO2PasskeyRecovery_Protocol] Theory closed
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: State_A_Recovered( $A, $B, encrypted_fido_key, reconstructed_ltk) ▶₀ #i
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: State_A_Recovered( $A, $B, encrypted_fido_key, reconstructed_ltk) ▶₀ #i
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: P2P_Rcv( $A, $B, 'recovery_help_request' ) ▶₀ #i
+1: !StoredEncryptedSubkey( $B, $A, aenc(sk1, pk(ltkB)) ) ▶₁ #i
+2: !Ltk( $B, ltkB ) ▶₂ #i
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+2
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+[Saturating Sources] Step 1 (Max 50)
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: State_A_Recovery_4( $A, $B, sk1, sk2, encrypted_fido_key ) ▶₀ #i
+2: !Pk( $A, pk(ltk) ) ▶₁ #i
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+2
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+[Saturating Sources] Done
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: P2P_Rcv( $A, 'A', 'recovery_help_request' ) ▶₀ #i
+1: !StoredEncryptedSubkey( 'A', $A, aenc(sk1, pk(~ltkA)) ) ▶₁ #i
+2: splitEqs(1)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: State_A_Recovery_4( 'A', $B, sk1, sk2, encrypted_fido_key ) ▶₀ #i
+2: splitEqs(1)
+3: !KU( ~ltkA ) @ #vk
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: P2P_Rcv( $A, $B, 'recovery_help_request' ) ▶₀ #i
+1: !StoredEncryptedSubkey( $B, $A, aenc(sk1, pk(~ltkB)) ) ▶₁ #i
+2: splitEqs(1)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: State_A_Recovery_4( $A, $B, sk1, sk2, encrypted_fido_key ) ▶₀ #i
+2: splitEqs(1)
+3: !KU( ~ltkB ) @ #vk
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.24
+2: P2P_Rcv( 'A', 'B', 'recovery_help_request' ) ▶₀ #vr.8
+3: splitEqs(1)
+4: splitEqs(2)
+5: splitEqs(3)
+6: splitEqs(4)
+7: splitEqs(5)
+8: splitEqs(6)
+9: splitEqs(7)
+10: splitEqs(8)
+11: splitEqs(9)
+12: splitEqs(10)
+13: splitEqs(11)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+2
+0
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+2: P2P_Rcv( 'A', 'B', 'recovery_help_request' ) ▶₀ #vr.8
+3: splitEqs(1)
+4: splitEqs(2)
+5: splitEqs(3)
+6: splitEqs(4)
+7: splitEqs(5)
+8: splitEqs(6)
+9: splitEqs(7)
+10: splitEqs(8)
+11: splitEqs(9)
+12: splitEqs(10)
+13: splitEqs(11)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+2
+0
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: P2P_Rcv( $A, 'A', 'recovery_help_request' ) ▶₀ #i
+1: splitEqs(1)
+2: !KU( aenc(sk1, pk(~ltkA)) ) @ #vk.9
+3: splitEqs(2)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+3
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: splitEqs(1)
+2: !KU( ~ltkA ) @ #vk
+3: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+4: P2P_Rcv( 'A', 'B', 'recovery_help_request' ) ▶₀ #vr.7
+5: splitEqs(2)
+6: splitEqs(3)
+7: splitEqs(4)
+8: splitEqs(5)
+9: splitEqs(6)
+10: splitEqs(7)
+11: splitEqs(8)
+12: splitEqs(9)
+13: splitEqs(10)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+4
+0
+1
+5
+6
+7
+8
+9
+10
+11
+12
+13
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: P2P_Rcv( $A, $B, 'recovery_help_request' ) ▶₀ #i
+1: splitEqs(1)
+2: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.9
+3: splitEqs(2)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+3
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(1)
+1: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.15
+2: splitEqs(2)
+3: splitEqs(3)
+4: splitEqs(4)
+5: splitEqs(5)
+6: splitEqs(6)
+7: splitEqs(7)
+8: splitEqs(8)
+9: splitEqs(9)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+2
+3
+4
+5
+6
+7
+8
+9
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.15
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+2: splitEqs(1)
+3: splitEqs(2)
+4: splitEqs(3)
+5: splitEqs(4)
+6: splitEqs(5)
+7: splitEqs(6)
+8: splitEqs(7)
+9: splitEqs(8)
+10: splitEqs(9)
+11: splitEqs(10)
+12: splitEqs(11)
+13: splitEqs(12)
+14: splitEqs(13)
+15: splitEqs(14)
+16: splitEqs(15)
+17: splitEqs(16)
+18: splitEqs(17)
+19: splitEqs(18)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.24
+2: splitEqs(1)
+3: splitEqs(2)
+4: splitEqs(3)
+5: splitEqs(4)
+6: splitEqs(5)
+7: splitEqs(6)
+8: splitEqs(7)
+9: splitEqs(8)
+10: splitEqs(9)
+11: splitEqs(10)
+12: splitEqs(11)
+13: splitEqs(12)
+14: splitEqs(13)
+15: splitEqs(14)
+16: splitEqs(15)
+17: splitEqs(16)
+18: splitEqs(17)
+19: splitEqs(18)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(0)
+1: splitEqs(1)
+2: !KU( ~ltkA ) @ #vk
+3: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+4: splitEqs(2)
+5: splitEqs(3)
+6: splitEqs(4)
+7: splitEqs(5)
+8: splitEqs(6)
+9: splitEqs(7)
+10: splitEqs(8)
+11: splitEqs(9)
+12: splitEqs(10)
+13: splitEqs(11)
+14: splitEqs(12)
+15: splitEqs(13)
+16: splitEqs(14)
+17: splitEqs(15)
+18: splitEqs(16)
+19: splitEqs(17)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+1: splitEqs(1)
+2: splitEqs(2)
+3: splitEqs(3)
+4: splitEqs(4)
+5: splitEqs(5)
+6: splitEqs(6)
+7: splitEqs(7)
+8: splitEqs(8)
+9: splitEqs(9)
+10: splitEqs(10)
+11: splitEqs(11)
+12: splitEqs(12)
+13: splitEqs(13)
+14: splitEqs(14)
+15: splitEqs(15)
+16: splitEqs(16)
+17: splitEqs(17)
+18: splitEqs(18)
+19: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+0
+19
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+1: splitEqs(1)
+2: splitEqs(2)
+3: splitEqs(3)
+4: splitEqs(4)
+5: splitEqs(5)
+6: splitEqs(6)
+7: splitEqs(7)
+8: splitEqs(8)
+9: splitEqs(9)
+10: splitEqs(10)
+11: splitEqs(11)
+12: splitEqs(12)
+13: splitEqs(13)
+14: splitEqs(14)
+15: splitEqs(15)
+16: splitEqs(16)
+17: splitEqs(17)
+18: splitEqs(18)
+19: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.17
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+0
+19
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.24
+1: splitEqs(1)
+2: splitEqs(2)
+3: splitEqs(3)
+4: splitEqs(4)
+5: splitEqs(5)
+6: splitEqs(6)
+7: splitEqs(7)
+8: splitEqs(8)
+9: splitEqs(9)
+10: splitEqs(10)
+11: splitEqs(11)
+12: splitEqs(12)
+13: splitEqs(13)
+14: splitEqs(14)
+15: splitEqs(15)
+16: splitEqs(16)
+17: splitEqs(17)
+18: splitEqs(18)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.24
+1: splitEqs(1)
+2: splitEqs(2)
+3: splitEqs(3)
+4: splitEqs(4)
+5: splitEqs(5)
+6: splitEqs(6)
+7: splitEqs(7)
+8: splitEqs(8)
+9: splitEqs(9)
+10: splitEqs(10)
+11: splitEqs(11)
+12: splitEqs(12)
+13: splitEqs(13)
+14: splitEqs(14)
+15: splitEqs(15)
+16: splitEqs(16)
+17: splitEqs(17)
+18: splitEqs(18)
+19: !KU( aenc(z, pk(~ltkA)) ) @ #vk.16
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+0
+19
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(1)
+1: !KU( ~ltkA ) @ #vk
+2: !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.25
+3: splitEqs(2)
+4: splitEqs(3)
+5: splitEqs(4)
+6: splitEqs(5)
+7: splitEqs(6)
+8: splitEqs(7)
+9: splitEqs(8)
+10: splitEqs(9)
+11: splitEqs(10)
+12: splitEqs(11)
+13: splitEqs(12)
+14: splitEqs(13)
+15: splitEqs(14)
+16: splitEqs(15)
+17: splitEqs(16)
+18: splitEqs(17)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(1)
+1: !KU( ~ltkA ) @ #vk
+2: !KU( aenc(zero, pk(~ltkB)) ) @ #vk.24
+3: splitEqs(2)
+4: splitEqs(3)
+5: splitEqs(4)
+6: splitEqs(5)
+7: splitEqs(6)
+8: splitEqs(7)
+9: splitEqs(8)
+10: splitEqs(9)
+11: splitEqs(10)
+12: splitEqs(11)
+13: splitEqs(12)
+14: splitEqs(13)
+15: splitEqs(14)
+16: splitEqs(15)
+17: splitEqs(16)
+18: splitEqs(17)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(1)
+1: !KU( ~ltkA ) @ #vk
+2: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+3: splitEqs(2)
+4: splitEqs(3)
+5: splitEqs(4)
+6: splitEqs(5)
+7: splitEqs(6)
+8: splitEqs(7)
+9: splitEqs(8)
+10: splitEqs(9)
+11: splitEqs(10)
+12: splitEqs(11)
+13: splitEqs(12)
+14: splitEqs(13)
+15: splitEqs(14)
+16: splitEqs(15)
+17: splitEqs(16)
+18: splitEqs(17)
+19: !KU( (~ltkA⊕sk1) ) @ #vk.22
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+1
+2
+19
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: splitEqs(1)
+1: !KU( ~ltkA ) @ #vk
+2: !KU( aenc((~ltkA⊕sk2), pk(~ltkB)) ) @ #vk.25
+3: splitEqs(2)
+4: splitEqs(3)
+5: splitEqs(4)
+6: splitEqs(5)
+7: splitEqs(6)
+8: splitEqs(7)
+9: splitEqs(8)
+10: splitEqs(9)
+11: splitEqs(10)
+12: splitEqs(11)
+13: splitEqs(12)
+14: splitEqs(13)
+15: splitEqs(14)
+16: splitEqs(15)
+17: splitEqs(16)
+18: splitEqs(17)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+1: splitEqs(11)
+2: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.24
+1: splitEqs(11)
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk
+1: !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.25
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.25
+1: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc((~ltkA⊕sk2), pk(~ltkB)) ) @ #vk.25
+1: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(zero, pk(~ltkB)) ) @ #vk.25
+1: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk
+2: !KU( ~ltkA ) @ #vk.22
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+1: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk
+2: !KU( (~ltkA⊕sk1) ) @ #vk.22
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(zero, pk(~ltkB)) ) @ #vk.24
+1: !KU( ~ltkA ) @ #vk.21
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc((~ltkA⊕sk2), pk(~ltkB)) ) @ #vk.24
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.24
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.24
+1: !KU( (~ltkA⊕sk1) ) @ #vk.21
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.28
+1: !KU( ~sk1A ) @ #vk.1
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.28
+1: !KU( ~sk1A ) @ #vk.1
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.28
+1: !KU( ~sk1A ) @ #vk.1
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk.1
+1: !KU( ~ltkA ) @ #vk.29
+2: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.4
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.4
+1: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.4
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk.1
+1: !KU( ~ltkA ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+1: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk.1
+1: !KU( (~ltkA⊕sk1) ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk.1
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk.1
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk.1
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.28
+2: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( adec(encrypted_fido_key, ~ltkA) ) @ #vk.1
+1: !KU( (~ltkA⊕sk2) ) @ #vk.29
+2: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.28
+2: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.28
+2: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk2) ) @ #vk.29
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( ~ltkA ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+1: splitEqs(11)
+2: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.17
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(zero, pk(~ltkB)) ) @ #vk.25
+1: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.17
+2: !KU( ~ltkA ) @ #vk.22
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc((~ltkA⊕sk2), pk(~ltkB)) ) @ #vk.25
+1: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.17
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+1: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.17
+2: !KU( (~ltkA⊕sk1) ) @ #vk.22
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.25
+1: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.17
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.25
+1: !KU( ~sk1A ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.25
+1: !KU( ~sk1A ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.18
+1: !KU( ~ltkA ) @ #vk.29
+2: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.29
+1: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.29
+1: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk
+1: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+2: !KU( (~ltkA⊕sk1) ) @ #vk.22
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+1: !KU( ~sk1A ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+1: !KU( ~sk1A ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.3
+1: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.18
+1: !KU( ~ltkA ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( pk(~ltkA) ) @ #vk.28
+3: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( ~fido_key ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( pk(~ltkA) ) @ #vk.28
+3: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+1: !KU( (~ltkA⊕sk1) ) @ #vk.22
+2: !KU( ~sk1A ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.25
+1: !KU( (~ltkA⊕sk1) ) @ #vk.22
+2: !KU( ~sk1A ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+1: !KU( ~sk1A ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+1: !KU( ~sk1A ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.27
+1: !KD( (~ltkA⊕~sk1A) ) ▶₀ #vk.1
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.27
+1: !KU( ~sk1A ) @ #vk.28
+2: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.27
+1: !KD( (~ltkA⊕~sk1A) ) ▶₀ #vk.1
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.27
+1: !KU( ~sk1A ) @ #vk.28
+2: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.27
+1: !KD( (~ltkA⊕~sk1A) ) ▶₀ #vk.1
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk2) ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.27
+1: !KU( ~sk1A ) @ #vk.28
+2: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+1: !KD( (~ltkA⊕sk1) ) ▶₀ #vk.1
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+1: !KU( ~ltkA ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( pk(~ltkA) ) @ #vk.28
+3: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.18
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.18
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.18
+1: !KU( (~ltkA⊕sk1) ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( pk(~ltkA) ) @ #vk.28
+3: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( ~fido_key ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.18
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+1: !KD( (~ltkA⊕sk2) ) ▶₀ #vk.1
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.24
+1: splitEqs(11)
+2: !KU( aenc(z, pk(~ltkA)) ) @ #vk.16
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+1
+0
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.29
+1: !KU( ~ltkA ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(~ltkA, pk(~ltkB)) ) @ #vk.24
+1: !KU( aenc(z, pk(~ltkA)) ) @ #vk.16
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(zero, pk(~ltkB)) ) @ #vk.24
+1: !KU( aenc(z, pk(~ltkA)) ) @ #vk.16
+2: !KU( ~ltkA ) @ #vk.21
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(sk1, pk(~ltkB)) ) @ #vk.24
+1: !KU( aenc(z, pk(~ltkA)) ) @ #vk.16
+2: !KU( (~ltkA⊕sk1) ) @ #vk.21
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc((~ltkA⊕sk2), pk(~ltkB)) ) @ #vk.24
+1: !KU( aenc(z, pk(~ltkA)) ) @ #vk.16
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+1: !KU( ~ltkA ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.3
+1: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(z, pk(~ltkA)) ) @ #vk.17
+1: !KU( ~ltkA ) @ #vk.28
+2: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.23
+1: !KU( ~sk1A ) @ #vk.29
+2: !KU( pk(~ltkB) ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.21
+1: !KU( ~sk1A ) @ #vk.29
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.21
+1: !KU( ~sk1A ) @ #vk.29
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk
+1: !KU( aenc(zero, pk(~ltkB)) ) @ #vk.24
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.21
+1: !KU( ~sk1A ) @ #vk.29
+2: !KU( pk(~ltkB) ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.28
+2: !KU( pk(~ltkA) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.28
+2: !KU( ~fido_key ) @ #vk.4
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.28
+2: !KU( pk(~ltkA) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( pk(~ltkA) ) @ #vk.28
+3: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(fido_key, pk(~ltkA)) ) @ #vk.18
+1: !KU( (~ltkA⊕sk2) ) @ #vk.29
+2: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( ~fido_key ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.23
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( pk(~ltkA) ) @ #vk.28
+3: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(z, pk(~ltkA)) ) @ #vk.17
+1: !KU( ~ltkA ) @ #vk.22
+2: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk2) ) @ #vk.29
+1: !KU( pk(~ltkB) ) @ #vk.30
+2: !KU( pk(~ltkA) ) @ #vk.28
+3: !KU( ~sk1A ) @ #vk.3
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+3
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.30
+1: !KU( ~sk1A ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.30
+1: !KU( ~sk1A ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(zero, pk(~ltkB)) ) @ #vk.24
+1: !KU( ~sk1A ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(zero, pk(~ltkB)) ) @ #vk.24
+1: !KU( ~sk1A ) @ #vk.28
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.31
+1: !KU( ~ltkB ) @ #vk.32
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk
+1: !KU( aenc((~ltkA⊕sk2), pk(~ltkB)) ) @ #vk.25
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(z, pk(~ltkA)) ) @ #vk.17
+1: !KU( (~ltkA⊕sk1) ) @ #vk.22
+2: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(z, pk(~ltkA)) ) @ #vk.17
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+2: !KU( pk(~ltkB) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(z, pk(~ltkA)) ) @ #vk.17
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+2: !KU( pk(~ltkB) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(z, pk(~ltkA)) ) @ #vk.17
+1: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+2: !KU( pk(~ltkB) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkA ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+1: !KU( ~ltkA ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.27
+2: !KU( pk(~ltkA) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.27
+2: !KU( pk(~ltkA) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.27
+2: !KU( pk(~ltkA) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕~sk1A) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc(z, pk(~ltkA)) ) @ #vk.17
+1: !KU( (~ltkA⊕sk2) ) @ #vk.28
+2: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk1) ) @ #vk.22
+1: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc((~ltkA⊕sk2), pk(~ltkB)) ) @ #vk.25
+1: !KU( ~sk1A ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( aenc((~ltkA⊕sk2), pk(~ltkB)) ) @ #vk.25
+1: !KU( ~sk1A ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.29
+1: !KU( (~ltkA⊕sk2) ) @ #vk.30
+2: !KU( pk(~ltkB) ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.30
+1: !KU( pk(x) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(~ltkB) ) @ #vk.30
+1: !KU( pk(x) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.29
+1: !KU( (~ltkA⊕sk2) ) @ #vk.30
+2: !KU( pk(~ltkB) ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk2) ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk2) ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk2) ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk2) ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( (~ltkA⊕sk2) ) @ #vk.28
+1: !KU( pk(~ltkB) ) @ #vk.29
+2: !KU( pk(~ltkA) ) @ #vk.27
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+2
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~sk1A ) @ #vk.30
+1: !KU( ~ltkB ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(x) ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(x) ) @ #vk.30
+1: !KU( ~ltkB ) @ #vk.32
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+1
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(x) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(x) ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.31
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(x) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( pk(x) ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+>>>>>>>>>>>>>>>>>>>>>>>> START INPUT
+0: !KU( ~ltkB ) @ #vk.30
+
+>>>>>>>>>>>>>>>>>>>>>>>> START OUTPUT
+0
+
+>>>>>>>>>>>>>>>>>>>>>>>> END Oracle call
+
+
+==============================================================================
+summary of summaries:
+
+analyzed: 1_ICS_FIDO2PasskeyRecovery_Protocol.spthy
+
+  output:          1_ICS_FIDO2PasskeyRecovery_Protocol_dependencyGraph.spthy
+  processing time: 30.02s
+  
+  protocol_is_executable_strong (exists-trace): verified (12 steps)
+  secrecy_peer_share_sk1 (all-traces): falsified - found trace (8 steps)
+  secrecy_main_key (all-traces): falsified - found trace (12 steps)
+  secrecy_fido_key (all-traces): falsified - found trace (13 steps)
+
+==============================================================================
+	Command being timed: "tamarin-prover --with-maude=/home/ubuntu-kr-6-antigravity/bin/maude --with-dot=./tamarin-cleandot.py 1_ICS_FIDO2PasskeyRecovery_Protocol.spthy --prove --derivcheck-timeout=0 --saturation=50 --open-chains=1000 --output=1_ICS_FIDO2PasskeyRecovery_Protocol_dependencyGraph.spthy --quit-on-warning"
+	User time (seconds): 98.76
+	System time (seconds): 7.92
+	Percent of CPU this job got: 354%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:30.10
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 675548
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 516382
+	Voluntary context switches: 1266759
+	Involuntary context switches: 10117
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 120
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
